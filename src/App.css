@@ -1,7 +1,13 @@
 .App {
   text-align: center;
-}
 
+}
+.h5, h5{
+  color: black;
+}
+p{
+  color: red;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -36,3 +42,6 @@
     transform: rotate(360deg);
   }
 }
+.container, .container-fluid {
+  margin-top: 20px;
+}  
