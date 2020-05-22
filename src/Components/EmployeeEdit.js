@@ -21,8 +21,10 @@ class EmployeeEdit extends Component {
   }
 
   async componentDidMount() {
+    console.log("EDIT EMPLOYEE CALLED")
+    console.log("this.props.match.params.id",this.props.match.params.id);
     if (this.props.match.params.id !== 'new') {
-      const group = await (await fetch(`/api/nycgeek/employee/${this.props.match.params.id}`)).json();
+      const group = await (await fetch(`/syama_api/v1/employees/${this.props.match.params.id}`)).json();
       this.setState({item: group});
     }
   }
@@ -39,19 +41,35 @@ class EmployeeEdit extends Component {
   async handleSubmit(event) {
     event.preventDefault();
     const {item} = this.state;
+    (item.id) ? (
+      await fetch(`/syama_api/v1/employees/${item.id}`, {
+        method: 'PUT',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(item),
+      })
+      ):
+      (
+        await fetch(`/syama_api/v1/employees`, {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(item),
+        })
+  
+      )
 
-    await fetch('/api/nycgeek/employee', {
-      method: (item.id) ? 'PUT' : 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(item),
-    });
+    
     this.props.history.push('/employees');
   }
 
   render() {
+    console.log("EDIT EMPLOYEE RENDER CALLED")
+
     const {item} = this.state;
     const title = <h2>{item.id ? 'Edit Employee' : 'Add Employee'}</h2>;
 

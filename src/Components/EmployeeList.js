@@ -12,15 +12,17 @@ class EmployeeList extends Component {
   }
 
   componentDidMount() {
+    console.log(" EMPLOYEE LIST componentDidMount CALLED")
+
     this.setState({isLoading: true});
 
-    fetch('api/nycgeek/employees')
+    fetch('syama_api/v1/employees')
       .then(response => response.json())
       .then(data => this.setState({employees: data, isLoading: false}));
   }
 
   async remove(id) {
-    await fetch(`/api/nycgeek/employee/${id}`, {
+    await fetch(`/syama_api/v1/employees/${id}`, {
       method: 'DELETE',
       headers: {
         'Accept': 'application/json',
@@ -33,6 +35,8 @@ class EmployeeList extends Component {
   }
 
   render() {
+    console.log(" EMPLOYEE LIST RENDER CALLED")
+
     const {employees, isLoading} = this.state;
 
     if (isLoading) {
